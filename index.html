@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Calculator</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:10px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:8px;
+box-shadow:0 0 5px rgba(0,0,0,0.1);
+}
+
+input{
+width:100%;
+padding:8px;
+margin:5px 0 10px;
+}
+
+button{
+width:100%;
+padding:10px;
+background:gold;
+border:none;
+font-weight:bold;
+}
+
+table{
+width:100%;
+margin-top:10px;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:8px;
+text-align:center;
+}
+
+th{
+background:gold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h2>Gold Calculator</h2>
+
+<input type="number" id="goldWeight" placeholder="Weight (gram)">
+<input type="number" id="goldPurity" placeholder="Purity %">
+
+<button onclick="calculateGold()">Calculate</button>
+
+<table>
+<tr>
+<th>24K</th>
+<th>22K</th>
+<th>21K</th>
+<th>20K</th>
+<th>18K</th>
+</tr>
+
+<tr>
+<td id="res24">-</td>
+<td id="res22">-</td>
+<td id="res21">-</td>
+<td id="res20">-</td>
+<td id="res18">-</td>
+</tr>
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+function calculateGold(){
+
+let weight=parseFloat(document.getElementById("goldWeight").value);
+let purity=parseFloat(document.getElementById("goldPurity").value);
+
+let pure=(weight*purity)/100;
+
+document.getElementById("res24").innerHTML=(pure/1).toFixed(3)+" g";
+document.getElementById("res22").innerHTML=(pure/0.916).toFixed(3)+" g";
+document.getElementById("res21").innerHTML=(pure/0.875).toFixed(3)+" g";
+document.getElementById("res20").innerHTML=(pure/0.833).toFixed(3)+" g";
+document.getElementById("res18").innerHTML=(pure/0.750).toFixed(3)+" g";
+
+}
+
+</script>
+
+</body>
+</html>
