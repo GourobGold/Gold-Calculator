@@ -3,19 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gold Calculator</title>
+<title>Gourob Jewellers</title>
 
 <style>
 
 body{
 font-family:Arial;
 background:#f2f2f2;
+margin:0;
 padding:10px;
 }
 
 .container{
 max-width:900px;
 margin:auto;
+}
+
+.header{
+background:white;
+padding:10px;
+border-radius:10px;
+box-shadow:0 0 6px rgba(0,0,0,0.1);
+margin-bottom:10px;
+text-align:center;
 }
 
 .row{
@@ -36,9 +46,9 @@ min-width:280px;
 input{
 width:100%;
 padding:8px;
-margin:5px 0 10px;
+margin:6px 0;
 border:1px solid #ccc;
-border-radius:4px;
+border-radius:5px;
 }
 
 button{
@@ -47,7 +57,7 @@ padding:10px;
 background:#f4c200;
 border:none;
 font-weight:bold;
-border-radius:4px;
+border-radius:5px;
 }
 
 table{
@@ -66,6 +76,14 @@ th{
 background:#f4c200;
 }
 
+.ana{
+margin-top:20px;
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 0 6px rgba(0,0,0,0.1);
+}
+
 </style>
 </head>
 
@@ -73,21 +91,23 @@ background:#f4c200;
 
 <div class="container">
 
-<h2 style="text-align:center;">❤️ Gourob Biswas ❤️</h2>
+<div class="header">
+<h2>❤️ Gourob Biswas ❤️</h2>
+</div>
 
 <div class="row">
 
 <div class="card">
 
-<h3>Gold Calculator</h3>
+<h3>🪙 Gold Calculator</h3>
 
 <label>গহনার ওজন (গ্রাম)</label>
-<input type="number" id="goldWeight">
+<input type="number" id="weight">
 
 <label>সোনার বিশুদ্ধতা (%)</label>
-<input type="number" id="goldPurity">
+<input type="number" id="purity">
 
-<button onclick="calculateGold()">Calculate</button>
+<button onclick="calcGold()">Calculate</button>
 
 <table>
 
@@ -96,7 +116,6 @@ background:#f4c200;
 <th>22K</th>
 <th>21K</th>
 <th>20K</th>
-<th>18K</th>
 </tr>
 
 <tr>
@@ -104,25 +123,23 @@ background:#f4c200;
 <td id="g22">-</td>
 <td id="g21">-</td>
 <td id="g20">-</td>
-<td id="g18">-</td>
 </tr>
 
 </table>
 
 </div>
 
-
 <div class="card">
 
-<h3>Gold Price</h3>
+<h3>💰 Gold Price</h3>
 
 <label>২৪ ক্যারেট দাম (প্রতি গ্রাম)</label>
-<input type="number" id="price24">
+<input type="number" id="price">
 
-<label>কত গ্রাম</label>
+<label>কত গ্রাম সোনা</label>
 <input type="number" id="gram">
 
-<button onclick="calculatePrice()">Calculate</button>
+<button onclick="calcPrice()">Calculate</button>
 
 <table>
 
@@ -137,10 +154,20 @@ background:#f4c200;
 </tr>
 
 <tr>
+<td>Making Charge (8%)</td>
+<td id="making">-</td>
+</tr>
+
+<tr>
+<td>Total Price</td>
+<td id="total">-</td>
+</tr>
+  
+<tr>
 <td>22K Price</td>
 <td id="p22">-</td>
 </tr>
-
+  
 <tr>
 <td>Making Charge (8%)</td>
 <td id="making">-</td>
@@ -157,15 +184,42 @@ background:#f4c200;
 
 </div>
 
+
+<div class="ana">
+
+<h3 style="text-align:center;">⚖️ আনা → গ্রাম লিস্ট</h3>
+
+<table>
+
+<tr>
+<th>আনা</th>
+<th>গ্রাম</th>
+</tr>
+
+<tr><td>1 আনা</td><td>0.728 g</td></tr>
+<tr><td>2 আনা</td><td>1.456 g</td></tr>
+<tr><td>3 আনা</td><td>2.184 g</td></tr>
+<tr><td>4 আনা</td><td>2.912 g</td></tr>
+<tr><td>5 আনা</td><td>3.640 g</td></tr>
+<tr><td>6 আনা</td><td>4.368 g</td></tr>
+<tr><td>7 আনা</td><td>5.096 g</td></tr>
+<tr><td>8 আনা</td><td>5.824 g</td></tr>
+<tr><td>9 আনা</td><td>6.552 g</td></tr>
+<tr><td>10 আনা</td><td>7.280 g</td></tr>
+
+</table>
+
+</div>
+
 </div>
 
 
 <script>
 
-function calculateGold(){
+function calcGold(){
 
-let w=parseFloat(document.getElementById("goldWeight").value);
-let p=parseFloat(document.getElementById("goldPurity").value);
+let w=parseFloat(document.getElementById("weight").value);
+let p=parseFloat(document.getElementById("purity").value);
 
 let pure=(w*p)/100;
 
@@ -173,25 +227,23 @@ document.getElementById("g24").innerHTML=(pure/1).toFixed(3)+" g";
 document.getElementById("g22").innerHTML=(pure/0.916).toFixed(3)+" g";
 document.getElementById("g21").innerHTML=(pure/0.875).toFixed(3)+" g";
 document.getElementById("g20").innerHTML=(pure/0.833).toFixed(3)+" g";
-document.getElementById("g18").innerHTML=(pure/0.750).toFixed(3)+" g";
 
 }
 
+function calcPrice(){
 
-function calculatePrice(){
-
-let price=parseFloat(document.getElementById("price24").value);
+let price=parseFloat(document.getElementById("price").value);
 let gram=parseFloat(document.getElementById("gram").value);
 
-let price24=price*gram;
-let price22=(price*0.916)*gram;
+let p24=price*gram;
+let p22=(price*0.916)*gram;
 
-let making=price22*0.08;
+let making=p22*0.08;
 
-let total=price22+making;
+let total=p22+making;
 
-document.getElementById("p24").innerHTML="₹"+price24.toFixed(0);
-document.getElementById("p22").innerHTML="₹"+price22.toFixed(0);
+document.getElementById("p24").innerHTML="₹"+p24.toFixed(0);
+document.getElementById("p22").innerHTML="₹"+p22.toFixed(0);
 document.getElementById("making").innerHTML="₹"+making.toFixed(0);
 document.getElementById("total").innerHTML="₹"+total.toFixed(0);
 
