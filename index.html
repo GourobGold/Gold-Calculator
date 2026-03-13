@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Gourob Jewellers</title>
 
 <style>
@@ -21,24 +22,24 @@ margin:auto;
 
 .header{
 background:white;
-padding:10px;
+padding:12px;
 border-radius:10px;
-box-shadow:0 0 6px rgba(0,0,0,0.1);
-margin-bottom:10px;
+box-shadow:0 0 5px rgba(0,0,0,0.1);
 text-align:center;
+margin-bottom:10px;
 }
 
 .row{
 display:flex;
-gap:10px;
 flex-wrap:wrap;
+gap:10px;
 }
 
 .card{
 background:white;
 padding:15px;
 border-radius:10px;
-box-shadow:0 0 6px rgba(0,0,0,0.1);
+box-shadow:0 0 5px rgba(0,0,0,0.1);
 flex:1;
 min-width:280px;
 }
@@ -46,7 +47,7 @@ min-width:280px;
 input{
 width:100%;
 padding:8px;
-margin:6px 0;
+margin:5px 0 10px;
 border:1px solid #ccc;
 border-radius:5px;
 }
@@ -56,8 +57,34 @@ width:100%;
 padding:10px;
 background:#f4c200;
 border:none;
-font-weight:bold;
 border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.resultGrid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+margin-top:10px;
+}
+
+.kbox{
+border:1px solid #ddd;
+border-radius:6px;
+text-align:center;
+}
+
+.kbox h4{
+background:#f4c200;
+margin:0;
+padding:6px;
+font-size:14px;
+}
+
+.kbox p{
+margin:6px;
+font-weight:bold;
 }
 
 table{
@@ -77,11 +104,11 @@ background:#f4c200;
 }
 
 .ana{
-margin-top:20px;
 background:white;
 padding:15px;
 border-radius:10px;
-box-shadow:0 0 6px rgba(0,0,0,0.1);
+box-shadow:0 0 5px rgba(0,0,0,0.1);
+margin-top:15px;
 }
 
 </style>
@@ -92,8 +119,9 @@ box-shadow:0 0 6px rgba(0,0,0,0.1);
 <div class="container">
 
 <div class="header">
-<h2>❤️ Gourob Biswas ❤️</h2>
+<h3>❤️ Gourob Biswas ❤️</h3>
 </div>
+
 
 <div class="row">
 
@@ -102,14 +130,168 @@ box-shadow:0 0 6px rgba(0,0,0,0.1);
 <h3>🪙 Gold Calculator</h3>
 
 <label>গহনার ওজন (গ্রাম)</label>
-<input type="number" id="weight">
+<input type="number" id="goldWeight">
 
 <label>সোনার বিশুদ্ধতা (%)</label>
-<input type="number" id="purity">
+<input type="number" id="goldPurity">
 
-<button onclick="calcGold()">Calculate</button>
+<button onclick="calculateGold()">Calculate</button>
+
+
+<div id="goldResult" style="display:none">
+
+<div class="resultGrid">
+
+<div class="kbox">
+<h4>24K</h4>
+<p id="res24"></p>
+</div>
+
+<div class="kbox">
+<h4>22K</h4>
+<p id="res22"></p>
+</div>
+
+<div class="kbox">
+<h4>21K</h4>
+<p id="res21"></p>
+</div>
+
+<div class="kbox">
+<h4>20K</h4>
+<p id="res20"></p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>💰 Gold Price</h3>
+
+<label>২৪ ক্যারেট দাম (প্রতি গ্রাম)</label>
+<input type="number" id="goldPrice">
+
+<label>কত গ্রাম সোনা</label>
+<input type="number" id="goldGram">
+
+<button onclick="calculatePrice()">Calculate</button>
+
 
 <table>
+
+<tr>
+<th>24K</th>
+<th>22K</th>
+</tr>
+
+<tr>
+<td id="p24"></td>
+<td id="p22"></td>
+</tr>
+
+<tr>
+<td id="m24"></td>
+<td id="m22"></td>
+</tr>
+
+<tr>
+<td id="t24"></td>
+<td id="t22"></td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<div class="ana">
+
+<h3 style="text-align:center;">⚖️ আনা → গ্রাম লিস্ট</h3>
+
+<table>
+
+<tr>
+<th>আনা</th>
+<th>গ্রাম</th>
+</tr>
+
+<tr><td>1 আনা</td><td>0.728 g</td></tr>
+<tr><td>2 আনা</td><td>1.456 g</td></tr>
+<tr><td>3 আনা</td><td>2.184 g</td></tr>
+<tr><td>4 আনা</td><td>2.912 g</td></tr>
+<tr><td>5 আনা</td><td>3.640 g</td></tr>
+<tr><td>6 আনা</td><td>4.368 g</td></tr>
+<tr><td>7 আনা</td><td>5.096 g</td></tr>
+<tr><td>8 আনা</td><td>5.824 g</td></tr>
+<tr><td>9 আনা</td><td>6.552 g</td></tr>
+<tr><td>10 আনা</td><td>7.280 g</td></tr>
+
+</table>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+function calculateGold(){
+
+let weight=parseFloat(document.getElementById("goldWeight").value);
+let purity=parseFloat(document.getElementById("goldPurity").value);
+
+let pure=(weight*purity)/100;
+
+document.getElementById("res24").innerHTML=pure.toFixed(2)+" g";
+document.getElementById("res22").innerHTML=(pure/0.916).toFixed(2)+" g";
+document.getElementById("res21").innerHTML=(pure/0.875).toFixed(2)+" g";
+document.getElementById("res20").innerHTML=(pure/0.833).toFixed(2)+" g";
+
+document.getElementById("goldResult").style.display="block";
+
+}
+
+
+function calculatePrice(){
+
+let price=parseFloat(document.getElementById("goldPrice").value);
+let gram=parseFloat(document.getElementById("goldGram").value);
+
+let price24=price*gram;
+let price22=(price*0.916)*gram;
+
+let making24=price24*0.08;
+let making22=price22*0.08;
+
+let total24=price24+making24;
+let total22=price22+making22;
+
+document.getElementById("p24").innerHTML="সোনা দাম ₹"+price24.toFixed(0);
+document.getElementById("p22").innerHTML="সোনা দাম ₹"+price22.toFixed(0);
+
+document.getElementById("m24").innerHTML="মেকিং চার্জ ₹"+making24.toFixed(0);
+document.getElementById("m22").innerHTML="মেকিং চার্জ ₹"+making22.toFixed(0);
+
+document.getElementById("t24").innerHTML="মোট ₹"+total24.toFixed(0);
+document.getElementById("t22").innerHTML="মোট ₹"+total22.toFixed(0);
+
+}
+
+</script>
+
+</body>
+</html><table>
 
 <tr>
 <th>24K</th>
