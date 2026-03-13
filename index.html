@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Gold Calculator</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#f5f5f5;
-margin:0;
+font-family:Arial;
+background:#f2f2f2;
 padding:10px;
 }
 
@@ -20,24 +18,27 @@ max-width:900px;
 margin:auto;
 }
 
+.row{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
 .card{
 background:white;
 padding:15px;
-margin-bottom:15px;
-border-radius:8px;
-box-shadow:0 0 5px rgba(0,0,0,0.1);
-}
-
-h2{
-text-align:center;
+border-radius:10px;
+box-shadow:0 0 6px rgba(0,0,0,0.1);
+flex:1;
+min-width:280px;
 }
 
 input{
 width:100%;
 padding:8px;
-margin:5px 0 10px 0;
+margin:5px 0 10px;
 border:1px solid #ccc;
-border-radius:5px;
+border-radius:4px;
 }
 
 button{
@@ -45,9 +46,8 @@ width:100%;
 padding:10px;
 background:#f4c200;
 border:none;
-border-radius:5px;
 font-weight:bold;
-cursor:pointer;
+border-radius:4px;
 }
 
 table{
@@ -67,26 +67,25 @@ background:#f4c200;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<div class="card">
-<h2>❤️ Gourob Biswas ❤️</h2>
-</div>
+<h2 style="text-align:center;">❤️ Gourob Biswas ❤️</h2>
+
+<div class="row">
 
 <div class="card">
 
 <h3>Gold Calculator</h3>
 
 <label>গহনার ওজন (গ্রাম)</label>
-<input type="number" id="goldWeight" placeholder="যেমন: 10">
+<input type="number" id="goldWeight">
 
 <label>সোনার বিশুদ্ধতা (%)</label>
-<input type="number" id="goldPurity" placeholder="যেমন: 86">
+<input type="number" id="goldPurity">
 
 <button onclick="calculateGold()">Calculate</button>
 
@@ -101,39 +100,55 @@ background:#f4c200;
 </tr>
 
 <tr>
-<td id="res24">-</td>
-<td id="res22">-</td>
-<td id="res21">-</td>
-<td id="res20">-</td>
-<td id="res18">-</td>
+<td id="g24">-</td>
+<td id="g22">-</td>
+<td id="g21">-</td>
+<td id="g20">-</td>
+<td id="g18">-</td>
 </tr>
 
 </table>
 
 </div>
 
+
 <div class="card">
 
 <h3>Gold Price</h3>
 
-<label>আজকের ২৪ ক্যারেট দাম (প্রতি গ্রাম)</label>
-<input type="number" id="goldPrice" placeholder="10000">
+<label>২৪ ক্যারেট দাম (প্রতি গ্রাম)</label>
+<input type="number" id="price24">
 
-<label>কত গ্রাম সোনা</label>
-<input type="number" id="goldGram" placeholder="9">
+<label>কত গ্রাম</label>
+<input type="number" id="gram">
 
 <button onclick="calculatePrice()">Calculate</button>
 
 <table>
 
 <tr>
-<th>24K</th>
-<th>22K</th>
+<th>Type</th>
+<th>Amount</th>
 </tr>
 
 <tr>
-<td id="price24">-</td>
-<td id="price22">-</td>
+<td>24K Price</td>
+<td id="p24">-</td>
+</tr>
+
+<tr>
+<td>22K Price</td>
+<td id="p22">-</td>
+</tr>
+
+<tr>
+<td>Making Charge (8%)</td>
+<td id="making">-</td>
+</tr>
+
+<tr>
+<td>Total Price</td>
+<td id="total">-</td>
 </tr>
 
 </table>
@@ -142,49 +157,43 @@ background:#f4c200;
 
 </div>
 
+</div>
+
+
 <script>
 
 function calculateGold(){
 
-let weight=parseFloat(document.getElementById("goldWeight").value);
-let purity=parseFloat(document.getElementById("goldPurity").value);
+let w=parseFloat(document.getElementById("goldWeight").value);
+let p=parseFloat(document.getElementById("goldPurity").value);
 
-if(isNaN(weight)||isNaN(purity)){
-alert("সঠিক মান লিখুন");
-return;
-}
+let pure=(w*p)/100;
 
-let pureGold=(weight*purity)/100;
-
-let gold24=pureGold/1;
-let gold22=pureGold/0.916;
-let gold21=pureGold/0.875;
-let gold20=pureGold/0.833;
-let gold18=pureGold/0.750;
-
-document.getElementById("res24").innerHTML=gold24.toFixed(3)+" g";
-document.getElementById("res22").innerHTML=gold22.toFixed(3)+" g";
-document.getElementById("res21").innerHTML=gold21.toFixed(3)+" g";
-document.getElementById("res20").innerHTML=gold20.toFixed(3)+" g";
-document.getElementById("res18").innerHTML=gold18.toFixed(3)+" g";
+document.getElementById("g24").innerHTML=(pure/1).toFixed(3)+" g";
+document.getElementById("g22").innerHTML=(pure/0.916).toFixed(3)+" g";
+document.getElementById("g21").innerHTML=(pure/0.875).toFixed(3)+" g";
+document.getElementById("g20").innerHTML=(pure/0.833).toFixed(3)+" g";
+document.getElementById("g18").innerHTML=(pure/0.750).toFixed(3)+" g";
 
 }
+
 
 function calculatePrice(){
 
-let price=parseFloat(document.getElementById("goldPrice").value);
-let gram=parseFloat(document.getElementById("goldGram").value);
+let price=parseFloat(document.getElementById("price24").value);
+let gram=parseFloat(document.getElementById("gram").value);
 
-if(isNaN(price)||isNaN(gram)){
-alert("সঠিক মান লিখুন");
-return;
-}
+let price24=price*gram;
+let price22=(price*0.916)*gram;
 
-let total24=price*gram;
-let total22=(price*0.916)*gram;
+let making=price22*0.08;
 
-document.getElementById("price24").innerHTML="₹"+total24.toFixed(0);
-document.getElementById("price22").innerHTML="₹"+total22.toFixed(0);
+let total=price22+making;
+
+document.getElementById("p24").innerHTML="₹"+price24.toFixed(0);
+document.getElementById("p22").innerHTML="₹"+price22.toFixed(0);
+document.getElementById("making").innerHTML="₹"+making.toFixed(0);
+document.getElementById("total").innerHTML="₹"+total.toFixed(0);
 
 }
 
